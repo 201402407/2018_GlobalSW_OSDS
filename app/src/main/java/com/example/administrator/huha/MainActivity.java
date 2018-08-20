@@ -21,6 +21,10 @@ public class MainActivity extends AppCompatActivity {
 
         // 액션 바 Title 설정
         ActionBar ab = getSupportActionBar();
+
+        // 타이틀 바 숨기기
+        ab.hide();
+
         ab.setTitle("Huha 메인 화면 액션 바");
 
         Log.d("MpMainActivity", "service start!!!!!!");
