@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         ab.setTitle("Huha 메인 화면 액션 바");
 
         Log.d("MpMainActivity", "service start!!!!!!");
-        //가연
+        //대원
         // immortal service 등록
         intentMyService = new Intent(this, PersistentService.class);
         //  intentMyService.putExtra("command", "start");
