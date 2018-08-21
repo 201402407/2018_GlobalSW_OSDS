@@ -7,18 +7,34 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.example.administrator.huha.GoogleMap.Googlemap;
+import com.google.android.gms.maps.GoogleMap;
 
 public class MainActivity extends AppCompatActivity {
     BroadcastReceiver receiver;
     Intent intentMyService;
-
+    Button button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ///맵으로 화면이동시키기 위한 임시 버튼클릭 이벤트///
+        button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                startActivity(new Intent(MainActivity.this, Googlemap.class));
+            }
+        });
+        ///맵으로 화면이동시키기 위한 임시 버튼클릭 이벤트///
+
+        /*
         // 액션 바 Title 설정
         ActionBar ab = getSupportActionBar();
 
@@ -51,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("MpMainActivity", e.getMessage()+"");
             e.printStackTrace();
         }
-
+        */
     }
 
     public void OnDestroy() {
@@ -62,4 +78,5 @@ public class MainActivity extends AppCompatActivity {
 
         super.onDestroy();
     }
+
 }
