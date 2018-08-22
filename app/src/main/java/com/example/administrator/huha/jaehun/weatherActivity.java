@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.administrator.huha.R;
@@ -41,10 +42,15 @@ public class weatherActivity extends AppCompatActivity implements LocationListen
     ImageView weather, humidity, wind, dust;
 //    Button button;
 
+    ProgressBar background;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
+
+        background = (ProgressBar) findViewById(R.id.circular_progress_bar_background);
+        background.setProgress(100);
 
         initView();
 

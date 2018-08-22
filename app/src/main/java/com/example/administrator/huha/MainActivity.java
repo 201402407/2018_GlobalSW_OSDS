@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         ///맵으로 화면이동시키기 위한 임시 버튼클릭 이벤트123///
         button = findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
