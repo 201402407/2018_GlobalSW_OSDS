@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,11 +16,17 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.administrator.huha.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class tempActivity extends BaseActivity {
+
+    private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+    private DatabaseReference mReference = mDatabase.getReference();
     ProgressBar mprogressBar;
     ProgressBar background;
 
@@ -68,12 +75,22 @@ public class tempActivity extends BaseActivity {
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String tokenID = FirebaseInstanceId.getInstance().getToken();
+                sendData SendData = new sendData();
+                mReference = mDatabase.getReference("Date");
+                String time = getTime().toString().trim();
+
                 if (count != 124) {
                     count++;
+                    if(!TextUtils.isEmpty(tokenID)) {
+                        SendData.count = count;
+                        SendData.firebaseKey = tokenID;
+                        mReference.child(tokenID).child(time).setValue(SendData);
+                    }
                     mprogressBar.setProgress(count);
                     edit_count.setText(String.valueOf(count));
 
-                    String time = getTime();
+
 //                    Toast.makeText(MainActivity.this, time +" : "+count, Toast.LENGTH_LONG).show();
 
                     persent = (double) count / (double) whole_count;
@@ -95,10 +112,12 @@ public class tempActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if (item.getItemId() == R.id.menu_home){
-            Intent resultIntent = new Intent();
+            Intent resultIntent = new Intent(getApplicationContext(), BluetoothActivity.class);
             resultIntent.putExtra("count", count);
             setResult(RESULT_OK, resultIntent);
             finish();
+            startActivity(resultIntent);
+
         }
         return true;
     }

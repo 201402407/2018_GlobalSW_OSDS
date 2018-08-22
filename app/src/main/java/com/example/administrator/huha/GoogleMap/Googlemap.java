@@ -97,6 +97,7 @@ public class Googlemap extends AppCompatActivity
 
         previous_marker = new ArrayList<Marker>();
 
+        /*
         Button button = findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +105,7 @@ public class Googlemap extends AppCompatActivity
                 showPlaceInformation(currentPosition);
             }
         });
+        */
 
         Log.d(TAG, "onCreate");
         mActivity = this;
