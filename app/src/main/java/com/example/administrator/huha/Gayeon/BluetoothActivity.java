@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,6 +31,13 @@ import android.widget.ToggleButton;
 
 import com.example.administrator.huha.MainActivity;
 import com.example.administrator.huha.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+
+import org.w3c.dom.Text;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -39,6 +47,10 @@ import java.util.Set;
 import java.util.UUID;
 
 public class BluetoothActivity extends Base2Activity {
+
+        private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+        private DatabaseReference mReference = mDatabase.getReference();
+        private ChildEventListener mChild;
 
         static final int REQUEST_ENABLE_BT = 10;
         static final int REQUEST_INTENT = 30;
@@ -107,15 +119,26 @@ public class BluetoothActivity extends Base2Activity {
             });
 
 
+
             plus.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    String tokenID = FirebaseInstanceId.getInstance().getToken();
+                    sendData SendData = new sendData();
+                    mReference = mDatabase.getReference("Date");
+                    String time = getTime().toString().trim();
                     if (count != 124) {
                         count++;
+                        /////firebase에 데이터 저장////
+                        if(!TextUtils.isEmpty(tokenID)) {
+                            SendData.count = count;
+                            SendData.firebaseKey = tokenID;
+                           mReference.child(tokenID).child(time).setValue(SendData);
+                        }
                         mprogressBar.setProgress(124 - count);
                         edit_count.setText(String.valueOf(124 - count));
 
-                        String time = getTime();
+
 //                    Toast.makeText(MainActivity.this, time +" : "+count, Toast.LENGTH_LONG).show();
 
                         persent = (double) count / (double) whole_count;

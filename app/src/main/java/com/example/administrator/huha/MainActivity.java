@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.administrator.huha.Gayeon.BluetoothActivity;
+import com.example.administrator.huha.GoogleMap.Database;
 import com.example.administrator.huha.GoogleMap.Googlemap;
 import com.google.android.gms.maps.GoogleMap;
 
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
-                startActivity(new Intent(MainActivity.this, Googlemap.class));
+                startActivity(new Intent(MainActivity.this, BluetoothActivity.class));
             }
         });
         ///맵으로 화면이동시키기 위한 임시 버튼클릭 이벤트///

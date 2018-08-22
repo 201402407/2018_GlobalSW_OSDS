@@ -26,7 +26,8 @@ public class Database extends AppCompatActivity {
         sendbt.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 // 버튼 누르면 수행 할 명령
-                databaseReference.child("message").child("click").setValue("2");
+                databaseReference.child("click").push().setValue("2");
+
             }
         });
     }
