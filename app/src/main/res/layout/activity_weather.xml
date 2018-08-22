@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".jaehun.weatherActivity"
-    android:background="@drawable/background">
+    android:background="@drawable/weather_bg">
 
     <LinearLayout
         android:id="@+id/top"
