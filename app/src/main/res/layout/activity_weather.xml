@@ -9,6 +9,23 @@
     tools:context=".jaehun.weatherActivity"
     android:background="@drawable/weather_bg">
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/circular_progress_bar_background"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="270dp"
+            android:layout_height="270dp"
+            android:layout_marginTop="25dp"
+            android:indeterminate="false"
+            android:max="100"
+            android:progress="1"
+            android:progressDrawable="@drawable/circular_progress_background" />
+
+    </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
