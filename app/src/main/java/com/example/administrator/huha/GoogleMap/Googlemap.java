@@ -354,9 +354,7 @@ public class Googlemap extends AppCompatActivity
 
         //지오코더... GPS를 주소로 변환
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-
         List<Address> addresses;
-
         try {
 
             addresses = geocoder.getFromLocation(
@@ -663,16 +661,11 @@ public class Googlemap extends AppCompatActivity
 
 
                 }
-
-
                 //중복 마커 제거
 
                 HashSet<Marker> hashSet = new HashSet<Marker>();
-
                 hashSet.addAll(previous_marker);
-
                 previous_marker.clear();
-
                 previous_marker.addAll(hashSet);
 
 
@@ -686,8 +679,7 @@ public class Googlemap extends AppCompatActivity
 
     }
 
-    public void showPlaceInformation(LatLng location)
-    {
+    public void showPlaceInformation(LatLng location) {
         mGoogleMap.clear();//지도 클리어
 
         if (previous_marker != null)
@@ -696,9 +688,9 @@ public class Googlemap extends AppCompatActivity
         new NRPlaces.Builder()
                 .listener(Googlemap.this)
                 .latlng(location.latitude, location.longitude)//현재 위치
-                .radius(500) //500 미터 내에서 검색
-                .type(PlaceType.RESTAURANT) //음식점
-                .key("AIzaSyCY5_3PPD4nDDDqy0VoatBt4-daSICjU3I")
+                .radius(2000) //500 미터 내에서 검색
+                .type(PlaceType.HOSPITAL) //병원
+                .key("AIzaSyDiNOXCkssoKjp-3uLqf_TicVoOxGw7KXg")
                 .build()
                 .execute();
     }
