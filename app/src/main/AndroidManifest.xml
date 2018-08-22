@@ -52,7 +52,10 @@
         </receiver>
 
         <activity android:name=".GoogleMap.Googlemap" />
-        <activity android:name=".GoogleMap.Database"></activity>
+        <activity android:name=".GoogleMap.Database" />
+        <activity android:name=".Gayeon.tempActivity" />
+        <activity android:name=".Gayeon.Base2Activity" />
+        <activity android:name=".Gayeon.BaseActivity" />
     </application>
 
 </manifest>
