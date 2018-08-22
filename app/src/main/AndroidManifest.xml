@@ -2,13 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.administrator.huha">
 
-    <!-- 서비스 관련 퍼미션  -->
+    <!-- 서비스 관련 퍼미션 -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_SERVICE" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="false"
@@ -17,7 +18,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAJNx6mnbnvPC6GCcocpklZZGk_oCvcWNI" />
@@ -37,7 +37,7 @@
         <service
             android:name=".PersistentService"
             android:enabled="true"
-            android:process=":remote"/>
+            android:process=":remote" />
 
         <receiver
             android:name=".RestartService"
@@ -50,7 +50,9 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <activity android:name=".GoogleMap.Googlemap"></activity>
+
+        <activity android:name=".GoogleMap.Googlemap" />
+        <activity android:name=".GoogleMap.Database"></activity>
     </application>
 
 </manifest>
