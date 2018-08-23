@@ -2,7 +2,10 @@ package com.example.administrator.huha.Gayeon;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -29,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.huha.R;
+import com.example.administrator.huha.SplashActivity;
 import com.example.administrator.huha.jaehun.WeatherRepo;
 import com.example.administrator.huha.jaehun.day3Repo;
 import com.google.firebase.database.ChildEventListener;
@@ -106,6 +110,9 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
 
     boolean check = false;
 
+    // Noti 알람 클릭 시 이동하는 화면 인텐트 정의.
+    Intent Noti_intent = new Intent(this, SplashActivity.class);
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth);
@@ -169,7 +176,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
                     persent = (double) count / (double) whole_count;
 
                     if (persent > 0.9) {
-                        noti();
+                        showNotification(getApplicationContext(), "Hu-Ha", "흡입기의 약이 얼마 남지 않았어요 !", Noti_intent);
                     }
                 } else {
                     Toast.makeText(BluetoothActivity.this, "흡입기의 약을 다 사용하셨습니다!", Toast.LENGTH_LONG).show();
@@ -274,7 +281,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
                                                     persent = (double) count / (double) whole_count;
 
                                                     if (persent > 0.9) {
-                                                        noti();
+                                                        showNotification(getApplicationContext(), "Hu-Ha", "흡입기의 약이 얼마 남지 않았어요 !", Noti_intent);
                                                     }
                                                 } else {
                                                     Toast.makeText(BluetoothActivity.this, "흡입기의 약을 다 사용하셨습니다!", Toast.LENGTH_LONG).show();
@@ -310,7 +317,34 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
         return mFormat.format(mDate);
     }
 
+    // 노티 알람 함수.
+    public void showNotification(Context context, String title, String body, Intent intent) {
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        int notificationId = 1;
+        String channelId = "channel-01";
+        String channelName = "Channel Name";
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel mChannel = new NotificationChannel(
+                    channelId, channelName, importance);
+            notificationManager.createNotificationChannel(mChannel);
+        }
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, channelId)
+                .setSmallIcon(R.drawable.noti_image)
+                .setContentTitle(title)
+                .setContentText(body);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addNextIntent(intent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(
+                0,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+        mBuilder.setContentIntent(resultPendingIntent);
+        notificationManager.notify(notificationId, mBuilder.build());
+    }
+
     // 노티 알람 함수
+    /*
     private void noti() {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(BluetoothActivity.this)
@@ -323,6 +357,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
                 (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         mNotificationManager.notify(0, mBuilder.build());
     }
+    */
 
     public void selectDevice() {
         mDevices = mBluetoothAdapter.getBondedDevices();
