@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.example.administrator.huha.Gayeon.BluetoothActivity;
+
 public class SplashActivity extends Activity {
     private Handler mHandler;
     private Runnable mRunnable;
@@ -16,7 +18,7 @@ public class SplashActivity extends Activity {
         mRunnable = new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), BluetoothActivity.class);
                 intent.putExtra("state", "launch");
                 startActivity(intent);
                 finish();

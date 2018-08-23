@@ -7,37 +7,23 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
-import android.icu.text.UnicodeSetSpanner;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
-import android.widget.SeekBar;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
-import com.example.administrator.huha.MainActivity;
 import com.example.administrator.huha.R;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
-
-import org.w3c.dom.Text;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -84,6 +70,8 @@ public class BluetoothActivity extends Base2Activity {
         Button plus;
         ImageView circle;
 
+        Button test; //weatheractivity test용 버튼
+
         long mNow;
         Date mDate;
         SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -97,6 +85,15 @@ public class BluetoothActivity extends Base2Activity {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_bluetooth);
+
+            test = (Button) findViewById(R.id.testbtn);
+            test.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view){
+                    Intent intent2 = new Intent(getApplicationContext(), com.example.administrator.huha.jaehun.weatherActivity.class);
+                    startActivity(intent2);
+                }
+            });
 
             plus = (Button) findViewById(R.id.plus);
 

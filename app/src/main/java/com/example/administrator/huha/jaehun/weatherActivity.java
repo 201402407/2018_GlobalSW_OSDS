@@ -6,33 +6,22 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.support.annotation.NonNull;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.administrator.huha.R;
-import com.google.gson.JsonObject;
-import com.google.gson.annotations.SerializedName;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
-import retrofit2.http.Header;
-import retrofit2.http.Headers;
-import retrofit2.http.Query;
 
 public class weatherActivity extends AppCompatActivity implements LocationListener {//, View.OnClickListener {
     LocationManager locationManager;
@@ -41,6 +30,24 @@ public class weatherActivity extends AppCompatActivity implements LocationListen
     TextView sinceOntime, grid, temperature, humidity_text, wind_text, dust_text, sky_name;
     ImageView weather, humidity, wind, dust;
 //    Button button;
+
+    String daejeon;
+    String busan;
+    String chungbuk;
+    String chungnam;
+    String daegu;
+    String gangwon;
+    String gwangju;
+    String gyeongbuk;
+    String gyeonggi;
+    String gyeongnam;
+    String incheon;
+    String jeju;
+    String jeonbuk;
+    String jeonnam;
+    String sejong;
+    String seoul;
+    String ulsan;
 
     ProgressBar background;
 
@@ -57,18 +64,18 @@ public class weatherActivity extends AppCompatActivity implements LocationListen
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         requestLocation();
 
+        new MyThread().execute();
     }
 
     private void initView() {
         //뷰세팅
-        weather = (ImageView) findViewById(R.id.sky);
-        sinceOntime = (TextView) findViewById(R.id.sinceOntime);
+        weather = (ImageView) findViewById(R.id.weather);
         grid = (TextView) findViewById(R.id.grid);
         temperature = (TextView) findViewById(R.id.temperature);
         humidity_text = (TextView) findViewById(R.id.humidity_text);
         wind_text = (TextView) findViewById(R.id.wind_text);
         dust_text = (TextView) findViewById(R.id.dust_text);
-        sky_name = (TextView) findViewById(R.id.skyname);
+        sky_name = (TextView) findViewById(R.id.sky);
         humidity = (ImageView) findViewById(R.id.humidity);
         wind = (ImageView) findViewById(R.id.wind);
         dust = (ImageView) findViewById(R.id.dust);
@@ -207,25 +214,80 @@ public class weatherActivity extends AppCompatActivity implements LocationListen
                                 break;
                         }
 
-                        switch (String.valueOf(weatherRepo[0].getWeather().getHourly().get(0).getPrecipitation().getType())) {
-                            case "0":
-                                sinceOntime.setText("강수정보없음 " + String.valueOf(weatherRepo[0].getWeather().getHourly().get(0).getPrecipitation().getSinceOntime()) + "mm");
+//                        switch (String.valueOf(weatherRepo[0].getWeather().getHourly().get(0).getPrecipitation().getType())) {
+//                            case "0":
+//                                sinceOntime.setText("강수정보없음 " + String.valueOf(weatherRepo[0].getWeather().getHourly().get(0).getPrecipitation().getSinceOntime()) + "mm");
+//                                break;
+//                            case "1":
+//                                sinceOntime.setText("비" + String.valueOf(weatherRepo[0].getWeather().getHourly().get(0).getPrecipitation().getSinceOntime()) + "mm");
+//                                break;
+//                            case "2":
+//                                sinceOntime.setText("비/눈" + String.valueOf(weatherRepo[0].getWeather().getHourly().get(0).getPrecipitation().getSinceOntime()) + "mm");
+//                                break;
+//                            case "3":
+//                                sinceOntime.setText("눈" + String.valueOf(weatherRepo[0].getWeather().getHourly().get(0).getPrecipitation().getSinceOntime()) + "cm");
+//                                break;
+//                        }
+
+                        switch (String.valueOf(weatherRepo[0].getWeather().getHourly().get(0).getGrid().getCity())) {
+                            case "부산":
+                                dust_text.setText(String.valueOf(busan) + "㎍/㎥");
                                 break;
-                            case "1":
-                                sinceOntime.setText("비" + String.valueOf(weatherRepo[0].getWeather().getHourly().get(0).getPrecipitation().getSinceOntime()) + "mm");
+                            case "충북":
+                                dust_text.setText(String.valueOf(chungbuk) + "㎍/㎥");
                                 break;
-                            case "2":
-                                sinceOntime.setText("비/눈" + String.valueOf(weatherRepo[0].getWeather().getHourly().get(0).getPrecipitation().getSinceOntime()) + "mm");
+                            case "충남":
+                                dust_text.setText(String.valueOf(chungnam) + "㎍/㎥");
                                 break;
-                            case "3":
-                                sinceOntime.setText("눈" + String.valueOf(weatherRepo[0].getWeather().getHourly().get(0).getPrecipitation().getSinceOntime()) + "cm");
+                            case "대구":
+                                dust_text.setText(String.valueOf(daegu) + "㎍/㎥");
+                                break;
+                            case "대전":
+                                dust_text.setText(String.valueOf(daejeon) + "㎍/㎥");
+                                break;
+                            case "강원":
+                                dust_text.setText(String.valueOf(gangwon) + "㎍/㎥");
+                                break;
+                            case "광주":
+                                dust_text.setText(String.valueOf(gwangju) + "㎍/㎥");
+                                break;
+                            case "경북":
+                                dust_text.setText(String.valueOf(gyeongbuk) + "㎍/㎥");
+                                break;
+                            case "경기":
+                                dust_text.setText(String.valueOf(gyeonggi) + "㎍/㎥");
+                                break;
+                            case "경남":
+                                dust_text.setText(String.valueOf(gyeongnam) + "㎍/㎥");
+                                break;
+                            case "인천":
+                                dust_text.setText(String.valueOf(incheon) + "㎍/㎥");
+                                break;
+                            case "제주":
+                                dust_text.setText(String.valueOf(jeju) + "㎍/㎥");
+                                break;
+                            case "전북":
+                                dust_text.setText(String.valueOf(jeonbuk) + "㎍/㎥");
+                                break;
+                            case "전남":
+                                dust_text.setText(String.valueOf(jeonnam) + "㎍/㎥");
+                                break;
+                            case "세종":
+                                dust_text.setText(String.valueOf(sejong) + "㎍/㎥");
+                                break;
+                            case "서울":
+                                dust_text.setText(String.valueOf(seoul) + "㎍/㎥");
+                                break;
+                            case "울산":
+                                dust_text.setText(String.valueOf(ulsan) + "㎍/㎥");
                                 break;
                         }
 
                         sky_name.setText(String.valueOf(weatherRepo[0].getWeather().getHourly().get(0).getSky().getName()));
-                        temperature.setText(String.valueOf(weatherRepo[0].getWeather().getHourly().get(0).getTemperature().getTc()) + "℃");
-                        humidity_text.setText("습도 " + String.valueOf(weatherRepo[0].getWeather().getHourly().get(0).getHumidity()) + "%");
-                        wind_text.setText("풍속 " + weatherRepo[0].getWeather().getHourly().get(0).getWind().getWspd() + "m/s");
+                        int temp = weatherRepo[0].getWeather().getHourly().get(0).getTemperature().getTc().indexOf(".");
+                        temperature.setText(String.valueOf(weatherRepo[0].getWeather().getHourly().get(0).getTemperature().getTc()).substring(0, temp) + "℃");
+                        humidity_text.setText(String.valueOf(weatherRepo[0].getWeather().getHourly().get(0).getHumidity()) + "%");
+                        wind_text.setText(weatherRepo[0].getWeather().getHourly().get(0).getWind().getWspd() + "m/s");
                         grid.setText(weatherRepo[0].getWeather().getHourly().get(0).getGrid().getCounty() + " " + weatherRepo[0].getWeather().getHourly().get(0).getGrid().getVillage());
                     } else {
                         temperature.setText("fail");
@@ -239,5 +301,38 @@ public class weatherActivity extends AppCompatActivity implements LocationListen
             }
         });
 
+    }
+
+    class MyThread extends AsyncTask {
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            Air air = dustApi.getAir();
+            Log.d("air", air.toString());
+            return air;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            Log.d("air", "onPostExecute: " + o.toString());
+            Air air = (Air) o;
+            daejeon = String.valueOf(air.getDaejeon());
+            busan = String.valueOf(air.getBusan());
+            chungbuk = String.valueOf(air.getChungbuk());
+            chungnam = String.valueOf(air.getChungnam());
+            daegu = String.valueOf(air.getDaegu());
+            gangwon = String.valueOf(air.getGangwon());
+            gwangju = String.valueOf(air.getGwangju());
+            gyeongbuk = String.valueOf(air.getGyeongbuk());
+            gyeonggi = String.valueOf(air.getGyeonggi());
+            gyeongnam = String.valueOf(air.getGyeongnam());
+            incheon = String.valueOf(air.getIncheon());
+            jeju = String.valueOf(air.getJeju());
+            jeonbuk = String.valueOf(air.getJeonbuk());
+            jeonnam = String.valueOf(air.getJeonnam());
+            sejong = String.valueOf(air.getSejong());
+            seoul = String.valueOf(air.getSeoul());
+            ulsan = String.valueOf(air.getUlsan());
+        }
     }
 }
