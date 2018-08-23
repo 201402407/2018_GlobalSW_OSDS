@@ -6,6 +6,8 @@ import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -96,6 +98,8 @@ public class Googlemap extends AppCompatActivity
 
 
         previous_marker = new ArrayList<Marker>();
+
+
 
         /*
         Button button = findViewById(R.id.button);
@@ -424,6 +428,8 @@ public class Googlemap extends AppCompatActivity
             // CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(currentLatLng, 15);
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng);
             mGoogleMap.moveCamera(cameraUpdate);
+
+            showPlaceInformation(currentPosition);
         }
     }
 
@@ -637,42 +643,32 @@ public class Googlemap extends AppCompatActivity
             public void run() {
 
                 for (noman.googleplaces.Place place : places) {
-
-
                     LatLng latLng
-
                             = new LatLng(place.getLatitude()
-
                             , place.getLongitude());
-
-
                     String markerSnippet = getCurrentAddress(latLng);
-
-
                     MarkerOptions markerOptions = new MarkerOptions();
 
+                    BitmapDrawable bitmapdraw = (BitmapDrawable)getResources().getDrawable(R.drawable.marker);
+                    Bitmap b = bitmapdraw.getBitmap();
+                    Bitmap smallMarker = Bitmap.createScaledBitmap(b,120,120,false);
+                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
+
                     markerOptions.position(latLng);
-
                     markerOptions.title(place.getName());
-
                     markerOptions.snippet(markerSnippet);
-
                     Marker item = mGoogleMap.addMarker(markerOptions);
-
                     previous_marker.add(item);
+
 
 
                 }
                 //중복 마커 제거
-
                 HashSet<Marker> hashSet = new HashSet<Marker>();
                 hashSet.addAll(previous_marker);
                 previous_marker.clear();
                 previous_marker.addAll(hashSet);
-
-
             }
-
         });
     }
 

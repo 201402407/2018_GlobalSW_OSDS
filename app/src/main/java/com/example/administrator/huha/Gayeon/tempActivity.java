@@ -112,14 +112,20 @@ public class tempActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if (item.getItemId() == R.id.menu_home){
-            Intent resultIntent = new Intent(getApplicationContext(), BluetoothActivity.class);
+            Intent resultIntent = new Intent();
             resultIntent.putExtra("count", count);
             setResult(RESULT_OK, resultIntent);
             finish();
-            startActivity(resultIntent);
-
         }
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("count", count);
+        setResult(RESULT_OK, resultIntent);
+        finish();
     }
 
     private String getTime() {

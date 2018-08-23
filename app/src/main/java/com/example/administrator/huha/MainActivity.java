@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
-                startActivity(new Intent(MainActivity.this, BluetoothActivity.class));
+                startActivity(new Intent(MainActivity.this, Googlemap.class));
             }
         });
         ///맵으로 화면이동시키기 위한 임시 버튼클릭 이벤트///

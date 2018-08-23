@@ -114,7 +114,6 @@ public class BluetoothActivity extends Base2Activity {
                 public void onClick(View view) {
                     Intent intent = new Intent(getApplicationContext(), tempActivity.class);
                     intent.putExtra("count", count);
-                    finish();
                     startActivityForResult(intent,REQUEST_INTENT);
                 }
             });
