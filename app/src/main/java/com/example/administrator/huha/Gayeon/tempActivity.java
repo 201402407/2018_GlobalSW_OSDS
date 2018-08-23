@@ -55,6 +55,8 @@ public class tempActivity extends BaseActivity {
         mprogressBar = (ProgressBar) findViewById(R.id.circular_progress_bar);
         mprogressBar.setProgress(count);
 
+        mprogressBar.setRotation(270);
+
         plus = (Button) findViewById(R.id.plus);
         edit_count = (EditText) findViewById(R.id.edit_count);
         reset = (ImageView) findViewById(R.id.reset);

@@ -100,10 +100,12 @@ public class BluetoothActivity extends Base2Activity {
             edit_count = (EditText) findViewById(R.id.edit_count);
             circle = (ImageView) findViewById(R.id.circle);
 
-            background = (ProgressBar) findViewById(R.id.circular_progress_bar_background);
+            background = (ProgressBar) findViewById(R.id.circular_progress_bar);
             background.setProgress(100);
-            mprogressBar = (ProgressBar) findViewById(R.id.circular_progress_bar);
+            mprogressBar = (ProgressBar) findViewById(R.id.circular_progress_bar_background);
             mprogressBar.setProgress(count);
+
+            mprogressBar.setRotation(270);
 
             //circle.setVisibility(View.INVISIBLE);
             circle.setOnClickListener(new OnClickListener() {
@@ -132,8 +134,8 @@ public class BluetoothActivity extends Base2Activity {
                             SendData.firebaseKey = tokenID;
                            mReference.child(tokenID).child(time).setValue(SendData);
                         }
-                        mprogressBar.setProgress(124 - count);
-                        edit_count.setText(String.valueOf(124 - count));
+                        mprogressBar.setProgress(count);
+                        edit_count.setText(String.valueOf(124-count));
 
 
 //                    Toast.makeText(MainActivity.this, time +" : "+count, Toast.LENGTH_LONG).show();
@@ -150,7 +152,7 @@ public class BluetoothActivity extends Base2Activity {
             });
 
 
-            checkBluetooth();
+            //checkBluetooth();
         }
 
         BluetoothDevice getDeviceFromBondedList(String name) {
@@ -237,8 +239,8 @@ public class BluetoothActivity extends Base2Activity {
 
                                                     if (count != 124) {
                                                         count++;
-                                                        mprogressBar.setProgress(124 - count);
-                                                        edit_count.setText(String.valueOf(124 - count));
+                                                        mprogressBar.setProgress(count);
+                                                        edit_count.setText(String.valueOf(124-count));
 
                                                         String time = getTime();
 //                                                  Toast.makeText(MainActivity.this, time +" : "+count, Toast.LENGTH_LONG).show();
@@ -385,7 +387,7 @@ public class BluetoothActivity extends Base2Activity {
                 case REQUEST_INTENT:
                     count = data.getIntExtra("count", 0);
                     edit_count.setText(String.valueOf(124 - count));
-                    mprogressBar.setProgress(124 - count);
+                    mprogressBar.setProgress(count);
                     check = true;
                     break;
 
@@ -414,7 +416,7 @@ public class BluetoothActivity extends Base2Activity {
                 if (pref != null) {
                     count = pref.getInt("count", 0);
                     edit_count.setText(String.valueOf(124 - count));
-                    mprogressBar.setProgress(124 - count);
+                    mprogressBar.setProgress(count);
                 }
             }
         }
