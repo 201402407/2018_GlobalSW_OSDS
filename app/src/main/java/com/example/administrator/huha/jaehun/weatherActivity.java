@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.administrator.huha.Gayeon.BaseActivity;
 import com.example.administrator.huha.R;
 
 import retrofit2.Call;
@@ -23,7 +24,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class weatherActivity extends AppCompatActivity implements LocationListener {//, View.OnClickListener {
+public class weatherActivity extends BaseActivity implements LocationListener {//, View.OnClickListener {
     LocationManager locationManager;
     double latitude;
     double longitude;
