@@ -21,7 +21,7 @@
             android:id="@+id/circle"
             android:layout_width="235dp"
             android:layout_height="235dp"
-            android:layout_marginTop="83dp"
+            android:layout_marginTop="103dp"
             android:padding="0dp"
             android:src="@drawable/circle" />
 
@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="96dp"
         android:orientation="vertical">
 
         <Button
@@ -63,6 +63,7 @@
                 android:id="@+id/edit_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@null"
                 android:focusableInTouchMode="false"
                 android:text="0"
                 android:textColor="#24A7FF"
@@ -94,7 +95,7 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="250dp"
             android:layout_height="250dp"
-            android:layout_marginTop="73dp"
+            android:layout_marginTop="93dp"
             android:indeterminate="false"
             android:max="100"
             android:progress="1"
@@ -105,12 +106,11 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="250dp"
             android:layout_height="250dp"
-            android:layout_marginTop="73dp"
+            android:layout_marginTop="93dp"
             android:indeterminate="false"
             android:max="124"
             android:progress="1"
             android:progressDrawable="@drawable/circular_progress_background" />
-
     </RelativeLayout>
 
     <LinearLayout

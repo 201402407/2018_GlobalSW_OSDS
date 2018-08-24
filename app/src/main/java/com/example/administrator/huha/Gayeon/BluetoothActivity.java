@@ -136,10 +136,12 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
         edit_count = (EditText) findViewById(R.id.edit_count);
         circle = (ImageView) findViewById(R.id.circle);
 
-        background = (ProgressBar) findViewById(R.id.circular_progress_bar_background);
+        background = (ProgressBar) findViewById(R.id.circular_progress_bar);
         background.setProgress(100);
-        mprogressBar = (ProgressBar) findViewById(R.id.circular_progress_bar);
+        mprogressBar = (ProgressBar) findViewById(R.id.circular_progress_bar_background);
         mprogressBar.setProgress(count);
+
+        mprogressBar.setRotation(270);
 
         //circle.setVisibility(View.INVISIBLE);
         circle.setOnClickListener(new OnClickListener() {
@@ -167,7 +169,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
                         SendData.firebaseKey = tokenID;
                         mReference.child(tokenID).child(time).setValue(SendData);
                     }
-                    mprogressBar.setProgress(124 - count);
+                    mprogressBar.setProgress(count);
                     edit_count.setText(String.valueOf(124 - count));
 
 
@@ -185,7 +187,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
         });
 
 
-        checkBluetooth();
+        //checkBluetooth();
     }
 
     BluetoothDevice getDeviceFromBondedList(String name) {
@@ -272,7 +274,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
 
                                                 if (count != 124) {
                                                     count++;
-                                                    mprogressBar.setProgress(124 - count);
+                                                    mprogressBar.setProgress(count);
                                                     edit_count.setText(String.valueOf(124 - count));
 
                                                     String time = getTime();
@@ -448,7 +450,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
             case REQUEST_INTENT:
                 count = data.getIntExtra("count", 0);
                 edit_count.setText(String.valueOf(124 - count));
-                mprogressBar.setProgress(124 - count);
+                mprogressBar.setProgress(count);
                 check = true;
                 break;
 
@@ -476,7 +478,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
             if (pref != null) {
                 count = pref.getInt("count", 0);
                 edit_count.setText(String.valueOf(124 - count));
-                mprogressBar.setProgress(124 - count);
+                mprogressBar.setProgress(count);
             }
         }
     }
