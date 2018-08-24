@@ -209,24 +209,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:scaleType="center"
-                android:src="@drawable/main_sunny" />
+                android:scaleType="center" />
 
             <ImageView
                 android:id="@+id/sky2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:scaleType="center"
-                android:src="@drawable/main_clouds" />
+                android:scaleType="center" />
 
             <ImageView
                 android:id="@+id/sky3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:scaleType="center"
-                android:src="@drawable/main_thunder" />
+                android:scaleType="center" />
 
         </LinearLayout>
 
@@ -250,6 +247,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:text="정보를 조회하는 중 입니다."
                 android:textSize="15sp" />
 
             <TextView

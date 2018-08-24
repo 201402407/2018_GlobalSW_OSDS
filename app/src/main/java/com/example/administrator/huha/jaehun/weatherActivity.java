@@ -9,7 +9,6 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -52,6 +51,7 @@ public class weatherActivity extends BaseActivity implements LocationListener {/
 
     ProgressBar background;
 
+    CustomAnimationDialog customAnimationDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +61,10 @@ public class weatherActivity extends BaseActivity implements LocationListener {/
         background.setProgress(100);
 
         initView();
+
+
+        customAnimationDialog = new CustomAnimationDialog(weatherActivity.this);
+        customAnimationDialog.show();
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         requestLocation();
@@ -232,63 +236,63 @@ public class weatherActivity extends BaseActivity implements LocationListener {/
 
                         switch (String.valueOf(weatherRepo[0].getWeather().getHourly().get(0).getGrid().getCity())) {
                             case "부산":
-                                dust_text.setText(String.valueOf(busan) + "㎍/㎥");
+                                dust_text.setText(String.valueOf(busan) + " ㎍/㎥");
                                 break;
                             case "충북":
-                                dust_text.setText(String.valueOf(chungbuk) + "㎍/㎥");
+                                dust_text.setText(String.valueOf(chungbuk) + " ㎍/㎥");
                                 break;
                             case "충남":
-                                dust_text.setText(String.valueOf(chungnam) + "㎍/㎥");
+                                dust_text.setText(String.valueOf(chungnam) + " ㎍/㎥");
                                 break;
                             case "대구":
-                                dust_text.setText(String.valueOf(daegu) + "㎍/㎥");
+                                dust_text.setText(String.valueOf(daegu) + " ㎍/㎥");
                                 break;
                             case "대전":
-                                dust_text.setText(String.valueOf(daejeon) + "㎍/㎥");
+                                dust_text.setText(String.valueOf(daejeon) + " ㎍/㎥");
                                 break;
                             case "강원":
-                                dust_text.setText(String.valueOf(gangwon) + "㎍/㎥");
+                                dust_text.setText(String.valueOf(gangwon) + " ㎍/㎥");
                                 break;
                             case "광주":
-                                dust_text.setText(String.valueOf(gwangju) + "㎍/㎥");
+                                dust_text.setText(String.valueOf(gwangju) + " ㎍/㎥");
                                 break;
                             case "경북":
-                                dust_text.setText(String.valueOf(gyeongbuk) + "㎍/㎥");
+                                dust_text.setText(String.valueOf(gyeongbuk) + " ㎍/㎥");
                                 break;
                             case "경기":
-                                dust_text.setText(String.valueOf(gyeonggi) + "㎍/㎥");
+                                dust_text.setText(String.valueOf(gyeonggi) + " ㎍/㎥");
                                 break;
                             case "경남":
-                                dust_text.setText(String.valueOf(gyeongnam) + "㎍/㎥");
+                                dust_text.setText(String.valueOf(gyeongnam) + " ㎍/㎥");
                                 break;
                             case "인천":
-                                dust_text.setText(String.valueOf(incheon) + "㎍/㎥");
+                                dust_text.setText(String.valueOf(incheon) + " ㎍/㎥");
                                 break;
                             case "제주":
-                                dust_text.setText(String.valueOf(jeju) + "㎍/㎥");
+                                dust_text.setText(String.valueOf(jeju) + " ㎍/㎥");
                                 break;
                             case "전북":
-                                dust_text.setText(String.valueOf(jeonbuk) + "㎍/㎥");
+                                dust_text.setText(String.valueOf(jeonbuk) + " ㎍/㎥");
                                 break;
                             case "전남":
-                                dust_text.setText(String.valueOf(jeonnam) + "㎍/㎥");
+                                dust_text.setText(String.valueOf(jeonnam) + " ㎍/㎥");
                                 break;
                             case "세종":
-                                dust_text.setText(String.valueOf(sejong) + "㎍/㎥");
+                                dust_text.setText(String.valueOf(sejong) + " ㎍/㎥");
                                 break;
                             case "서울":
-                                dust_text.setText(String.valueOf(seoul) + "㎍/㎥");
+                                dust_text.setText(String.valueOf(seoul) + " ㎍/㎥");
                                 break;
                             case "울산":
-                                dust_text.setText(String.valueOf(ulsan) + "㎍/㎥");
+                                dust_text.setText(String.valueOf(ulsan) + " ㎍/㎥");
                                 break;
                         }
 
                         sky_name.setText(String.valueOf(weatherRepo[0].getWeather().getHourly().get(0).getSky().getName()));
                         int temp = weatherRepo[0].getWeather().getHourly().get(0).getTemperature().getTc().indexOf(".");
                         temperature.setText(String.valueOf(weatherRepo[0].getWeather().getHourly().get(0).getTemperature().getTc()).substring(0, temp) + "℃");
-                        humidity_text.setText(String.valueOf(weatherRepo[0].getWeather().getHourly().get(0).getHumidity()) + "%");
-                        wind_text.setText(weatherRepo[0].getWeather().getHourly().get(0).getWind().getWspd() + "m/s");
+                        humidity_text.setText(String.valueOf(weatherRepo[0].getWeather().getHourly().get(0).getHumidity()) + " %");
+                        wind_text.setText(weatherRepo[0].getWeather().getHourly().get(0).getWind().getWspd() + " m/s");
                         grid.setText(weatherRepo[0].getWeather().getHourly().get(0).getGrid().getCounty() + " " + weatherRepo[0].getWeather().getHourly().get(0).getGrid().getVillage());
                     } else {
                         temperature.setText("fail");
@@ -301,7 +305,7 @@ public class weatherActivity extends BaseActivity implements LocationListener {/
 
             }
         });
-
+        customAnimationDialog.dismiss();
     }
 
     class MyThread extends AsyncTask {
