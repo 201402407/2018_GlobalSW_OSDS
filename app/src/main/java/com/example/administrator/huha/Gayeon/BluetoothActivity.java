@@ -25,12 +25,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.administrator.huha.GoogleMap.Googlemap;
 import com.example.administrator.huha.R;
 import com.example.administrator.huha.SplashActivity;
 import com.example.administrator.huha.jaehun.WeatherRepo;
@@ -117,6 +119,14 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth);
 
+        ImageButton button = findViewById(R.id.find_hospital);
+        button.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Googlemap.class);
+                startActivity(intent);
+            }
+        });
         weather = (LinearLayout) findViewById(R.id.weather);
 
         initView();

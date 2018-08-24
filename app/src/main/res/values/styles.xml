@@ -19,5 +19,7 @@
 
     <style name="weatherTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="windowNoTitle">true</item>
+        <item name="colorPrimaryDark">#5CDFF7</item>
     </style>
+
 </resources>

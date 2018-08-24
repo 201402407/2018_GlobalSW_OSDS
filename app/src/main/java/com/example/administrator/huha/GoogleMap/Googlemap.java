@@ -3,6 +3,7 @@ package com.example.administrator.huha.GoogleMap;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,23 +17,36 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.administrator.huha.Gayeon.BaseActivity;
 import com.example.administrator.huha.R;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -55,7 +69,7 @@ import noman.googleplaces.PlaceType;
 import noman.googleplaces.PlacesException;
 import noman.googleplaces.PlacesListener;
 
-public class Googlemap extends AppCompatActivity
+public class Googlemap extends BaseActivity
         implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -82,9 +96,9 @@ public class Googlemap extends AppCompatActivity
     LatLng currentPosition;
 
     LocationRequest locationRequest = new LocationRequest()
-            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-            .setInterval(UPDATE_INTERVAL_MS)
-            .setFastestInterval(FASTEST_UPDATE_INTERVAL_MS);
+            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            //.setInterval(UPDATE_INTERVAL_MS)
+            //.setFastestInterval(FASTEST_UPDATE_INTERVAL_MS);
 
     List<Marker> previous_marker = null;
 
@@ -100,6 +114,43 @@ public class Googlemap extends AppCompatActivity
         previous_marker = new ArrayList<Marker>();
 
 
+        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(com.google.android.gms.location.places.Place place) {
+                // TODO: Get info about the selected place.
+
+                // 목록중 장소를 클릭하면 그 장소로 마커생성 후 이동
+                Location location = new Location("");
+                location.setLatitude(place.getLatLng().latitude);
+                location.setLongitude(place.getLatLng().longitude);
+                tempsetCurrentLocation(location, place.getName().toString(), place.getAddress().toString());
+                Log.i(TAG, "Place: " + place.getName());
+
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i(TAG, "An error occurred: " + status);
+            }
+        });
+
+        /*
+        int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
+        try {
+            Intent intent =
+                    new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
+                            .build(this);
+            startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+        } catch (GooglePlayServicesRepairableException e) {
+            // TODO: Handle the error.
+        } catch (GooglePlayServicesNotAvailableException e) {
+            // TODO: Handle the error.
+        }
+        */
 
         /*
         Button button = findViewById(R.id.button);
@@ -127,10 +178,8 @@ public class Googlemap extends AppCompatActivity
         mapFragment.getMapAsync(this);
     }
 
-
     @Override
     public void onResume() {
-
         super.onResume();
 
         if (mGoogleApiClient.isConnected()) {
@@ -397,6 +446,38 @@ public class Googlemap extends AppCompatActivity
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
+    public void tempsetCurrentLocation(Location location, String markerTitle, String markerSnippet) {
+
+        mMoveMapByUser = false;
+
+
+        if (currentMarker != null) currentMarker.remove();
+
+
+        LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(currentLatLng);
+        markerOptions.title(markerTitle);
+        markerOptions.snippet(markerSnippet);
+        markerOptions.draggable(true);
+
+        //구글맵의 디폴트 현재 위치는 파란색 동그라미로 표시
+        //마커를 원하는 이미지로 변경하여 현재 위치 표시하도록 수정 fix - 2017. 11.27
+        //markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher));
+
+        currentMarker = mGoogleMap.addMarker(markerOptions);
+
+
+        if (mMoveMapByAPI) {
+
+            Log.d(TAG, "setCurrentLocation :  mGoogleMap moveCamera "
+                    + location.getLatitude() + " " + location.getLongitude());
+            // CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(currentLatLng, 15);
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(currentLatLng);
+            mGoogleMap.moveCamera(cameraUpdate);
+        }
+    }
 
     public void setCurrentLocation(Location location, String markerTitle, String markerSnippet) {
 
@@ -692,4 +773,5 @@ public class Googlemap extends AppCompatActivity
                 .build()
                 .execute();
     }
+
 }
