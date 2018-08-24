@@ -33,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.huha.GoogleMap.Googlemap;
+import com.example.administrator.huha.PersistentService;
 import com.example.administrator.huha.R;
 import com.example.administrator.huha.SplashActivity;
 import com.example.administrator.huha.jaehun.WeatherRepo;
@@ -164,6 +165,14 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
             }
         });
 
+        edit_count.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), tempActivity.class);
+                intent.putExtra("count", count);
+                startActivityForResult(intent, REQUEST_INTENT);
+            }
+        });
 
         plus.setOnClickListener(new OnClickListener() {
             @Override
@@ -437,6 +446,10 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
     @Override
     protected void onDestroy() {
         try {
+
+            Intent intentMyService = new Intent(this, PersistentService.class);
+            startService(intentMyService);
+
             mWorkerThread.interrupt(); // 데이터 수신 쓰레드 종료
             mInputStream.close();
             mSocket.close();

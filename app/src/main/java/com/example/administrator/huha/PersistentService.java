@@ -78,12 +78,15 @@ public class PersistentService extends Service implements Runnable {
      *
      * 서비스가 시작되었을때 run()이 실행되기까지 delay를 handler를 통해서 주고 있다.
      */
+
     @Override
-    public void onStart(Intent intent, int startId) {
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+        if(mIsRunning)
+            return START_NOT_STICKY;
 
         Log.d("PersistentService", "onStart()");
-     //   Toast.makeText(this, "Service Start!", Toast.LENGTH_LONG).show();
-        super.onStart(intent, startId);
+        //   Toast.makeText(this, "Service Start!", Toast.LENGTH_LONG).show();
 
         mStartId = startId;
 
@@ -92,6 +95,7 @@ public class PersistentService extends Service implements Runnable {
         mHandler.postDelayed(this, LOCATION_UPDATE_DELAY);
         mIsRunning = true;
 
+        return START_REDELIVER_INTENT;
     }
 
     /**
@@ -118,7 +122,7 @@ public class PersistentService extends Service implements Runnable {
 
             function();
 
-            mHandler.postDelayed(this, LOCATION_UPDATE_DELAY);
+        //    mHandler.postDelayed(this, LOCATION_UPDATE_DELAY);
             mIsRunning = true;
         }
 
