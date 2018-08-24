@@ -19,7 +19,10 @@
 
     <style name="weatherTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="windowNoTitle">true</item>
-        <item name="colorPrimaryDark">#5CDFF7</item>
     </style>
 
+    <style name="EditTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:colorAccent">@color/cursorColor</item>
+        <item name="android:colorControlNormal">@color/nomalColor</item>
+    </style>
 </resources>

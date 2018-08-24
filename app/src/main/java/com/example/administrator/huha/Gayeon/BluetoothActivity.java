@@ -153,6 +153,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
 
         mprogressBar.setRotation(270);
 
+        plus.setVisibility(View.GONE);
         //circle.setVisibility(View.INVISIBLE);
         circle.setOnClickListener(new OnClickListener() {
             @Override
@@ -480,6 +481,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
     }
 
     protected void restoreState() {
+
         SharedPreferences pref = getSharedPreferences("pref", Activity.MODE_PRIVATE);
 
         if (check) {
