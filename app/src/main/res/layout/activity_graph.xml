@@ -9,9 +9,11 @@
     tools:context=".Gayeon.tempActivity">
 
     <!--android:background="@drawable/background_graph"-->
-
+    <include
+        layout="@layout/activity_toolbar"/>
 
     <LinearLayout
+        android:layout_below="@layout/activity_toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"

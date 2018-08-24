@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -42,10 +43,17 @@ public class tempActivity extends BaseActivity {
     Date mDate;
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd");
 
+    Toolbar mToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
+
+        mToolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
+        getSupportActionBar().setDisplayShowTitleEnabled(false); // 기본 타이틀 표시 안하게 하기.
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_icon);
 
         Intent intent = getIntent();
         count = intent.getIntExtra("count", 0);
@@ -105,23 +113,47 @@ public class tempActivity extends BaseActivity {
 
     }
 
+    // 액션 바 메뉴 생성 함수
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
     }
+    */
+/*
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        if (item.getItemId() == R.id.menu_home){
+        if (item.getItemId() == R.id.home){
+            Toast.makeText(this,"asd", Toast.LENGTH_SHORT).show();
+
             Intent resultIntent = new Intent();
             resultIntent.putExtra("count", count);
             setResult(RESULT_OK, resultIntent);
             finish();
+            return true;
         }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
+    */
 
+    // 액션 바 메뉴 클릭 이벤트 함수.
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
+
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("count", count);
+                setResult(RESULT_OK, resultIntent);
+                finish();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
     @Override
     public void onBackPressed() {
         Intent resultIntent = new Intent();

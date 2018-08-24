@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.example.administrator.huha.Gayeon.BluetoothActivity;
+import com.example.administrator.huha.Gayeon.tempActivity;
 
 public class SplashActivity extends Activity {
     private Handler mHandler;
