@@ -83,8 +83,8 @@
                 <LinearLayout
                     android:layout_width="192dp"
                     android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
                     android:layout_gravity="center"
-                    android:layout_marginTop="100dp"
                     android:layout_weight="2.2"
                     android:orientation="vertical">
 
@@ -97,6 +97,8 @@
                             android:id="@+id/weather"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
                             android:layout_weight="3"
                             android:scaleType="center"
                             app:srcCompat="@drawable/sunny" />
@@ -134,11 +136,11 @@
                     <TextView
                         android:id="@+id/temperature"
                         android:layout_width="match_parent"
-                        android:layout_height="57dp"
+                        android:layout_height="83dp"
                         android:layout_weight="3"
                         android:gravity="center_horizontal"
                         android:textColor="@android:color/white"
-                        android:textSize="50sp" />
+                        android:textSize="80sp" />
                 </LinearLayout>
 
             </RelativeLayout>
@@ -216,7 +218,7 @@
                 android:gravity="center"
                 android:text="습도"
                 android:textColor="@android:color/white"
-                android:textSize="12sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -225,7 +227,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="미세먼지"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -234,7 +237,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="바람"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -249,7 +253,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/dust_text"
@@ -257,7 +262,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/wind_text"
@@ -265,7 +271,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
         </LinearLayout>
 
     </LinearLayout>
