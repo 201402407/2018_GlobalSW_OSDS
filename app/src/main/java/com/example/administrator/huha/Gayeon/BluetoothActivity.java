@@ -154,7 +154,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
 
         mprogressBar.setRotation(270);
 
-        plus.setVisibility(View.GONE);
+        plus.setVisibility(View.INVISIBLE);
         //circle.setVisibility(View.INVISIBLE);
         circle.setOnClickListener(new OnClickListener() {
             @Override
@@ -741,11 +741,11 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
     }
 
     public void initView() {
-                sky1 = findViewById(R.id.sky1);
-                sky2 = findViewById(R.id.sky2);
-                sky3 = findViewById(R.id.sky3);
-                temp1 = findViewById(R.id.temp1);
-                temp2 = findViewById(R.id.temp2);
-                temp3 = findViewById(R.id.temp3);
+        sky1 = findViewById(R.id.sky1);
+        sky2 = findViewById(R.id.sky2);
+        sky3 = findViewById(R.id.sky3);
+        temp1 = findViewById(R.id.temp1);
+        temp2 = findViewById(R.id.temp2);
+        temp3 = findViewById(R.id.temp3);
     }
 }
