@@ -14,7 +14,16 @@ public class day3Repo {
 
     @SerializedName("weather")
     weather weather;
+    @SerializedName("result")
+    Result result;
 
+    public class Result {
+        @SerializedName("message") String message;
+        @SerializedName("code") String code;
+
+        public String getMessage() {return message;}
+        public String getCode() {return code;}
+    }
     public class weather{
         public List<forecast3days> forecast3days = new ArrayList<>();
         public List<forecast3days> getForecast() {return forecast3days;}
@@ -37,9 +46,11 @@ public class day3Repo {
                 public class temperature{
                     @SerializedName("temp25hour") String temp25hour;
                     @SerializedName("temp49hour") String temp49hour;
+                    @SerializedName("temp46hour") String temp46hour;
 
                     public String getTemp25hour() {return temp25hour;}
                     public String getTemp49hour() {return temp49hour;}
+                    public String getTemp46hour() {return temp46hour;}
                 }
 
                 public Sky getSky() {return sky;}
@@ -50,6 +61,7 @@ public class day3Repo {
         }
     }
 
+    public Result getResult() {return result;}
     public weather getWeather() {return weather;}
 
     public interface days3ApiInterface {

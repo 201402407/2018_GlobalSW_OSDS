@@ -661,9 +661,9 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
                         sky3.setImageResource(R.drawable.main_rainsnow);
                         break;
                 }
-
                 int index = day3Repos[0].getWeather().getForecast().get(0).getFcst3hour().getTemperature().getTemp25hour().indexOf(".");
                 temp2.setText(String.valueOf(day3Repos[0].getWeather().getForecast().get(0).getFcst3hour().getTemperature().getTemp25hour()).substring(0, index) + "℃");
+//                temp3.setText(String.valueOf(day3Repos[0].getWeather().getForecast().get(0).getFcst3hour().getTemperature().getTemp46hour()));
                 index = day3Repos[0].getWeather().getForecast().get(0).getFcst3hour().getTemperature().getTemp49hour().indexOf(".");
                 temp3.setText(String.valueOf(day3Repos[0].getWeather().getForecast().get(0).getFcst3hour().getTemperature().getTemp49hour()).substring(0, index) + "℃");
             }

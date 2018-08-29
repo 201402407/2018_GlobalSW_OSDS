@@ -10,6 +10,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -29,6 +31,7 @@ public class weatherActivity extends BaseActivity implements LocationListener {/
     double longitude;
     TextView sinceOntime, grid, temperature, humidity_text, wind_text, dust_text, sky_name;
     ImageView weather, humidity, wind, dust;
+    ImageButton backbutton;
 //    Button button;
 
     String daejeon;
@@ -62,7 +65,6 @@ public class weatherActivity extends BaseActivity implements LocationListener {/
 
         initView();
 
-
         customAnimationDialog = new CustomAnimationDialog(weatherActivity.this);
         customAnimationDialog.show();
 
@@ -70,6 +72,13 @@ public class weatherActivity extends BaseActivity implements LocationListener {/
         requestLocation();
 
         new MyThread().execute();
+
+        backbutton.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                finish();
+            }
+        });
     }
 
     private void initView() {
@@ -88,6 +97,8 @@ public class weatherActivity extends BaseActivity implements LocationListener {/
         humidity.setImageResource(R.drawable.humidity);
         wind.setImageResource(R.drawable.wind);
         dust.setImageResource(R.drawable.dust);
+
+        backbutton = (ImageButton) findViewById(R.id.imageButton2);
     }
 
 
