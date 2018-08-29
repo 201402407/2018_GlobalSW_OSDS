@@ -8,7 +8,7 @@
     android:layout_gravity="center_horizontal"
     android:orientation="vertical"
     android:theme="@style/EditTheme"
-    tools:context=".Gayeon.tempActivity">
+    tools:context=".Gayeon.RestActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

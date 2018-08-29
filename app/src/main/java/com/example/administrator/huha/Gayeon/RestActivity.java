@@ -3,18 +3,13 @@ package com.example.administrator.huha.Gayeon;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -30,7 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class tempActivity extends BaseActivity {
+public class RestActivity extends BaseActivity {
 
     private FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference mReference = mDatabase.getReference();
@@ -164,7 +159,7 @@ public class tempActivity extends BaseActivity {
                     persent = (double) count / (double) whole_count;
 
                 } else {
-                    Toast.makeText(tempActivity.this, "흡입기의 약을 다 사용하셨습니다!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RestActivity.this, "흡입기의 약을 다 사용하셨습니다!", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -285,7 +280,7 @@ public class tempActivity extends BaseActivity {
         switch (id) {
             case 1:
                 DatePickerDialog dpd = new DatePickerDialog
-                        (tempActivity.this, // 현재화면의 제어권자
+                        (RestActivity.this, // 현재화면의 제어권자
                                 new DatePickerDialog.OnDateSetListener() {
                                     @Override
                                     public void onDateSet(android.widget.DatePicker view,

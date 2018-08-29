@@ -159,7 +159,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
         circle.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), tempActivity.class);
+                Intent intent = new Intent(getApplicationContext(), RestActivity.class);
                 intent.putExtra("count", count);
                 startActivityForResult(intent, REQUEST_INTENT);
             }
@@ -168,7 +168,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
         edit_count.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), tempActivity.class);
+                Intent intent = new Intent(getApplicationContext(), RestActivity.class);
                 intent.putExtra("count", count);
                 startActivityForResult(intent, REQUEST_INTENT);
             }

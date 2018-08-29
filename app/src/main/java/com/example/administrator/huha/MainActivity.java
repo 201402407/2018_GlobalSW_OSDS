@@ -2,19 +2,13 @@ package com.example.administrator.huha;
 
 import android.content.BroadcastReceiver;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.administrator.huha.Gayeon.BluetoothActivity;
-import com.example.administrator.huha.GoogleMap.Database;
-import com.example.administrator.huha.GoogleMap.Googlemap;
-import com.google.android.gms.maps.GoogleMap;
 
 public class MainActivity extends AppCompatActivity {
     BroadcastReceiver receiver;
