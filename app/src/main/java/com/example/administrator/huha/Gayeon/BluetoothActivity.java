@@ -183,7 +183,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
                 sendData SendData = new sendData();
                 mReference = mDatabase.getReference("Date");
                 String time = getTime().toString().trim();
-                if (count != 124) {
+                if (count != whole_count) {
                     count++;
                     /////firebase에 데이터 저장////
                     if (!TextUtils.isEmpty(tokenID)) {
@@ -295,10 +295,11 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
 
                                                 Toast.makeText(BluetoothActivity.this, "흡입기 사용", Toast.LENGTH_SHORT).show();
 
-                                                if (count != 124) {
+                                                if (count != whole_count) {
                                                     count++;
                                                     mprogressBar.setProgress(count);
-                                                    edit_count.setText(String.valueOf(124 - count));
+                                                    edit_count.setText(String.valueOf(whole_count - count));
+                                                    saveState();
 
                                                     String time = getTime();
 //                                                  Toast.makeText(MainActivity.this, time +" : "+count, Toast.LENGTH_LONG).show();
@@ -495,6 +496,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
         saveState();
     }
 
+    @Override
     protected void onResume() {
         super.onResume();
         restoreState();
