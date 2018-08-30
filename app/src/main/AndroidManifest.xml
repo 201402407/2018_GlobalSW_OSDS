@@ -32,24 +32,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
 
         <service
             android:name=".PersistentService"
             android:enabled="true"
             android:process=":remote" />
-
-        <receiver
-            android:name=".RestartService"
-            android:enabled="true"
-            android:exported="false"
-            android:label="RestartService"
-            android:process=":remote">
-            <intent-filter>
-                <action android:name="ACTION.RESTART.PersistentService" />
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
 
         <activity android:name=".GoogleMap.Googlemap" />
         <activity android:name=".Gayeon.BluetoothActivity" />
@@ -59,7 +46,6 @@
         <activity
             android:name=".jaehun.weatherActivity"
             android:theme="@style/weatherTheme" />
-        <activity android:name=".GraphActivity"></activity>
     </application>
 
 </manifest>
