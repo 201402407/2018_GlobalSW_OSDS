@@ -83,7 +83,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
     InputStream mInputStream = null;
     String mStrDelimiter = "\r\n";
     char mCharDelimiter = '\n';
-    EditText mEditReceive;
+    EditText mEditReceive, whole;
 
     Thread mWorkerThread = null;
     byte[] readBuffer;
@@ -95,7 +95,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
 
     int count = 0;
     double persent = 0;
-    final int whole_count = 124;
+    int whole_count = 124;
 
     EditText edit_count;
     Button plus;
@@ -119,6 +119,8 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth);
+
+        whole = (EditText)findViewById(R.id.whole);
 
         ImageButton button = findViewById(R.id.find_hospital);
         button.setOnClickListener(new OnClickListener() {
@@ -190,7 +192,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
                         mReference.child(tokenID).child(time).setValue(SendData);
                     }
                     mprogressBar.setProgress(count);
-                    edit_count.setText(String.valueOf(124 - count));
+                    edit_count.setText(String.valueOf(whole_count - count));
 
 
 //                    Toast.makeText(MainActivity.this, time +" : "+count, Toast.LENGTH_LONG).show();
@@ -207,7 +209,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
         });
 
 
-        //checkBluetooth();
+        checkBluetooth();
     }
 
     BluetoothDevice getDeviceFromBondedList(String name) {
@@ -473,7 +475,11 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
 
             case REQUEST_INTENT:
                 count = data.getIntExtra("count", 0);
-                edit_count.setText(String.valueOf(124 - count));
+                whole_count = data.getIntExtra("whole_count", 124);
+
+                edit_count.setText(String.valueOf(whole_count - count));
+                whole.setText(" / "+String.valueOf(whole_count)+"회");
+
                 mprogressBar.setProgress(count);
                 check = true;
                 break;
@@ -501,8 +507,11 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
             check = false;
         } else {
             if (pref != null) {
+                whole_count = pref.getInt("whole_count", 124);
+                whole.setText(" / "+String.valueOf(whole_count)+"회");
+
                 count = pref.getInt("count", 0);
-                edit_count.setText(String.valueOf(124 - count));
+                edit_count.setText(String.valueOf(whole_count - count));
                 mprogressBar.setProgress(count);
             }
         }
@@ -513,6 +522,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
         SharedPreferences.Editor editor = pref.edit();
 
         editor.putInt("count", count);
+        editor.putInt("whole_count", whole_count);
 
         editor.commit();
     }

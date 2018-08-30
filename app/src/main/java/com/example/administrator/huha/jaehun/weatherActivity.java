@@ -213,19 +213,19 @@ public class weatherActivity extends BaseActivity implements LocationListener {/
                             case "SKY_O09":
                                 weather.setImageResource(R.drawable.snow);
                                 break;
-                            case "SKY_010":
+                            case "SKY_O10":
                                 weather.setImageResource(R.drawable.rainsnow);
                                 break;
-                            case "SKY_011":
+                            case "SKY_O11":
                                 weather.setImageResource(R.drawable.thunder);
                                 break;
-                            case "SKY_012":
+                            case "SKY_O12":
                                 weather.setImageResource(R.drawable.rain);
                                 break;
-                            case "SKY_013":
+                            case "SKY_O13":
                                 weather.setImageResource(R.drawable.snow);
                                 break;
-                            case "SKY_014":
+                            case "SKY_O14":
                                 weather.setImageResource(R.drawable.rainsnow);
                                 break;
                         }

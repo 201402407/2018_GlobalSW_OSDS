@@ -70,9 +70,12 @@
                 android:textSize="55dp"
                 android:textStyle="bold" />
 
-            <TextView
+            <EditText
+                android:id="@+id/whole"
                 android:layout_width="wrap_content"
+                android:background="@null"
                 android:layout_height="wrap_content"
+                android:focusableInTouchMode="false"
                 android:gravity="center"
                 android:text=" / 124회"
                 android:textColor="#777777"

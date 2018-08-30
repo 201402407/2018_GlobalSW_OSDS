@@ -35,9 +35,9 @@ public class RestActivity extends BaseActivity {
 
     int count = 0;
     double persent = 0;
-    final int whole_count = 124;
+    int whole_count = 124;
 
-    EditText edit_count;
+    EditText edit_count, whole;
     ImageButton plus, save;
     ImageView reset;
 
@@ -55,7 +55,7 @@ public class RestActivity extends BaseActivity {
 
 
     final Calendar c = Calendar.getInstance();
-    int myear,mmonth,mday;
+    int myear=0,mmonth,mday;
     int year = c.get(Calendar.YEAR);
     int month = c.get(Calendar.MONTH);
     int day = c.get(Calendar.DAY_OF_MONTH);
@@ -89,9 +89,12 @@ public class RestActivity extends BaseActivity {
         name_edit = (EditText) findViewById(R.id.name);
         date_edit = (EditText) findViewById(R.id.date);
         availity_edit = (EditText) findViewById(R.id.availity);
+        whole = (EditText) findViewById(R.id.whole);
 
         mprogressBar.setProgress(count);
         edit_count.setText(String.valueOf(count));
+        whole.setText(" / "+String.valueOf(whole_count)+"회");
+
 
         date_edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +111,9 @@ public class RestActivity extends BaseActivity {
                     date = date_edit.getText().toString();
                     availity = availity_edit.getText().toString();
                     save.setImageResource(R.drawable.edit);
+
+                    whole_count = Integer.parseInt(availity);
+                    whole.setText(" / "+String.valueOf(whole_count)+"회");
 
                     name_edit.setEnabled(false);
                     date_edit.setEnabled(false);
@@ -200,6 +206,7 @@ public class RestActivity extends BaseActivity {
 
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra("count", count);
+                resultIntent.putExtra("whole_count", whole_count);
                 setResult(RESULT_OK, resultIntent);
                 finish();
                 return true;
@@ -213,6 +220,7 @@ public class RestActivity extends BaseActivity {
     public void onBackPressed() {
         Intent resultIntent = new Intent();
         resultIntent.putExtra("count", count);
+        resultIntent.putExtra("whole_count", whole_count);
         setResult(RESULT_OK, resultIntent);
         finish();
     }
@@ -247,10 +255,19 @@ public class RestActivity extends BaseActivity {
             name = pref.getString("name", "");
             date = pref.getString("date", "");
             availity = pref.getString("availity", "");
+            whole_count = pref.getInt("whole_count", 124);
+
+            myear = pref.getInt("myear", 0);
+            mmonth = pref.getInt("mmonth", 0);
+            mday = pref.getInt("mday", 0);
 
             name_edit.setText(name);
-            date_edit.setText(date);
+            temp = Integer.toString(countdday(myear,mmonth,mday));
+            temp = temp+"일 지났습니다.";
+            date_edit.setText(temp);
+
             availity_edit.setText(availity);
+            whole.setText(" / "+String.valueOf(whole_count)+"회");
 
             data = pref.getBoolean("data", false);
 
@@ -273,7 +290,10 @@ public class RestActivity extends BaseActivity {
         //editor.putString("date", date);
         editor.putString("date", temp);
         editor.putString("availity", availity);
-
+        editor.putInt("myear", myear);
+        editor.putInt("mmonth", mmonth);
+        editor.putInt("mday", mday);
+        editor.putInt("whole_count", whole_count);
         editor.putBoolean("data", data);
         editor.commit();
     }
@@ -293,6 +313,7 @@ public class RestActivity extends BaseActivity {
                                         myear = year;
                                         mmonth = monthOfYear+1;
                                         mday = dayOfMonth;
+
                                         temp = Integer.toString(countdday(myear,mmonth,mday));
                                         temp = temp+"일 지났습니다.";
                                         date_edit.setText(temp);

@@ -54,7 +54,10 @@
                     android:textSize="55dp"
                     android:textStyle="bold" />
 
-                <TextView
+                <EditText
+                    android:id="@+id/whole"
+                    android:background="@null"
+                    android:focusableInTouchMode="false"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
