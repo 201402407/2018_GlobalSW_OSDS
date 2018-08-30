@@ -21,6 +21,7 @@ import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -446,6 +447,37 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
         }
     }
 
+    // 뒤로가기, 홈버튼 입력 시 현재 액티비티를 백그라운드로 전환.
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if ( event.getAction() == KeyEvent.ACTION_DOWN )
+        {
+            if ( keyCode == KeyEvent.KEYCODE_BACK )
+            {
+                moveTaskToBack(true);
+                /*
+                Intent intent = new Intent();
+
+                intent.setAction(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                startActivity(intent);
+                */
+            }
+            if ( keyCode == KeyEvent.KEYCODE_HOME )
+            {
+                moveTaskToBack(true);
+                /*
+                Intent intent = new Intent();
+
+                intent.setAction(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                startActivity(intent);
+                */
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     @Override
     protected void onDestroy() {
