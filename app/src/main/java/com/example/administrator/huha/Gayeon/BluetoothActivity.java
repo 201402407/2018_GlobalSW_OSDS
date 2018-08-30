@@ -121,6 +121,10 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth);
 
+
+        Intent intentMyService = new Intent(this, PersistentService.class);
+        startService(intentMyService);
+
         whole = (EditText)findViewById(R.id.whole);
 
         ImageButton button = findViewById(R.id.find_hospital);
@@ -482,9 +486,6 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
     @Override
     protected void onDestroy() {
         try {
-
-            Intent intentMyService = new Intent(this, PersistentService.class);
-            startService(intentMyService);
 
             mWorkerThread.interrupt(); // 데이터 수신 쓰레드 종료
             mInputStream.close();
