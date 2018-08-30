@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -54,10 +55,11 @@ public class RestActivity extends BaseActivity {
 
 
     final Calendar c = Calendar.getInstance();
+    int myear,mmonth,mday;
     int year = c.get(Calendar.YEAR);
     int month = c.get(Calendar.MONTH);
     int day = c.get(Calendar.DAY_OF_MONTH);
-
+    String temp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,7 +107,6 @@ public class RestActivity extends BaseActivity {
                     name = name_edit.getText().toString();
                     date = date_edit.getText().toString();
                     availity = availity_edit.getText().toString();
-
                     save.setImageResource(R.drawable.edit);
 
                     name_edit.setEnabled(false);
@@ -241,6 +242,8 @@ public class RestActivity extends BaseActivity {
     protected void restoreState() {
         SharedPreferences pref = getSharedPreferences("pref", Activity.MODE_PRIVATE);
         if (pref != null) {
+
+
             name = pref.getString("name", "");
             date = pref.getString("date", "");
             availity = pref.getString("availity", "");
@@ -267,7 +270,8 @@ public class RestActivity extends BaseActivity {
         SharedPreferences.Editor editor = pref.edit();
 
         editor.putString("name", name);
-        editor.putString("date", date);
+        //editor.putString("date", date);
+        editor.putString("date", temp);
         editor.putString("availity", availity);
 
         editor.putBoolean("data", data);
@@ -285,7 +289,13 @@ public class RestActivity extends BaseActivity {
                                     @Override
                                     public void onDateSet(android.widget.DatePicker view,
                                                           int year, int monthOfYear, int dayOfMonth) {
-                                        date_edit.setText(year + "년 " + (monthOfYear + 1) + "월 " + dayOfMonth + "일");
+                                        //date_edit.setText(year + "년 " + (monthOfYear + 1) + "월 " + dayOfMonth + "일");
+                                        myear = year;
+                                        mmonth = monthOfYear+1;
+                                        mday = dayOfMonth;
+                                        temp = Integer.toString(countdday(myear,mmonth,mday));
+                                        temp = temp+"일 지났습니다.";
+                                        date_edit.setText(temp);
                                     }
                                 },
                                 year, month, day);
@@ -293,6 +303,30 @@ public class RestActivity extends BaseActivity {
         }
 
         return super.onCreateDialog(id);
+    }
+
+    public int countdday(int myear, int mmonth, int mday) {
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            Calendar todaCal = Calendar.getInstance(); //오늘날자 가져오기
+            Calendar ddayCal = Calendar.getInstance(); //오늘날자를 가져와 변경시킴
+
+            mmonth -= 1; // 받아온날자에서 -1을 해줘야함.
+            ddayCal.set(myear,mmonth,mday);// D-day의 날짜를 입력
+            //Log.e("테스트",simpleDateFormat.format(todaCal.getTime()) + "");
+            //Log.e("테스트",simpleDateFormat.format(ddayCal.getTime()) + "");
+
+            long today = todaCal.getTimeInMillis()/86400000; //->(24 * 60 * 60 * 1000) 24시간 60분 60초 * (ms초->초 변환 1000)
+            long dday = ddayCal.getTimeInMillis()/86400000;
+            long count = today - dday; // 오늘 날짜에서 dday 날짜를 빼주게 됩니다.
+            return (int) count;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return -1;
+        }
     }
 
 }
