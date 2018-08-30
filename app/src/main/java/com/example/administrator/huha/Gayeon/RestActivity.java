@@ -38,6 +38,7 @@ public class RestActivity extends BaseActivity {
     int whole_count = 124;
 
     EditText edit_count, whole;
+
     ImageButton plus, save, minus;
     ImageView reset;
 
@@ -48,7 +49,6 @@ public class RestActivity extends BaseActivity {
     String name, date, availity;
 
     EditText name_edit, date_edit, availity_edit;
-
     Toolbar mToolbar;
 
     boolean data = false;

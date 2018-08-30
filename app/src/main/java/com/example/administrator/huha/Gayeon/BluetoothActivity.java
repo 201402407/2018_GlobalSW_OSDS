@@ -250,16 +250,14 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
 
             Toast.makeText(this, "블루투스 연결 성공!", Toast.LENGTH_LONG).show();
 
-//            Btn_Connect.setVisibility(View.INVISIBLE);
-//            Btn_RESET.setVisibility(View.VISIBLE);
+
 
             // 데이터 수신 준비.
             beginListenForData();
 
         } catch (Exception e) {
             Toast.makeText(this, "블루투스 연결 중 오류가 발생했습니다.", Toast.LENGTH_LONG).show();
-//            Btn_Connect.setVisibility(View.VISIBLE);
-//            Btn_RESET.setVisibility(View.INVISIBLE);
+
         }
     }
 
