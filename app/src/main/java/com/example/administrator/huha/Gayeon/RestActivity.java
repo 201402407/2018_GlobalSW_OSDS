@@ -38,7 +38,7 @@ public class RestActivity extends BaseActivity {
     int whole_count = 124;
 
     EditText edit_count, whole;
-    ImageButton plus, save;
+    ImageButton plus, save, minus;
     ImageView reset;
 
     long mNow;
@@ -82,6 +82,7 @@ public class RestActivity extends BaseActivity {
         mprogressBar.setRotation(270);
 
         plus = (ImageButton) findViewById(R.id.plus);
+        minus = (ImageButton) findViewById(R.id.minus);
         save = (ImageButton) findViewById(R.id.save);
         edit_count = (EditText) findViewById(R.id.edit_count);
         reset = (ImageView) findViewById(R.id.reset);
@@ -167,6 +168,35 @@ public class RestActivity extends BaseActivity {
 
                 } else {
                     Toast.makeText(RestActivity.this, "흡입기의 약을 다 사용하셨습니다!", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String tokenID = FirebaseInstanceId.getInstance().getToken();
+                sendData SendData = new sendData();
+                mReference = mDatabase.getReference("Date");
+                String time = getTime().toString().trim();
+
+                if (count != 0) {
+                    count--;
+                    if (!TextUtils.isEmpty(tokenID)) {
+                        SendData.count = count;
+                        SendData.firebaseKey = tokenID;
+                        mReference.child(tokenID).child(time).setValue(SendData);
+                    }
+                    mprogressBar.setProgress(count);
+                    edit_count.setText(String.valueOf(count));
+
+
+//                    Toast.makeText(MainActivity.this, time +" : "+count, Toast.LENGTH_LONG).show();
+
+                    persent = (double) count / (double) whole_count;
+
+                } else {
+                    //Toast.makeText(RestActivity.this, "흡입기 사용 횟수가 0", Toast.LENGTH_LONG).show();
                 }
             }
         });

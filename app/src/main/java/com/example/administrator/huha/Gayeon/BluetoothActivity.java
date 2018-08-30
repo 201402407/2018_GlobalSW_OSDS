@@ -210,6 +210,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
 
 
         checkBluetooth();
+        //히히
     }
 
     BluetoothDevice getDeviceFromBondedList(String name) {
