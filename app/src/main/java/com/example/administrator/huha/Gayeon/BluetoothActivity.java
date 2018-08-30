@@ -123,6 +123,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
 
         whole = (EditText)findViewById(R.id.whole);
 
+
         ImageButton button = findViewById(R.id.find_hospital);
         button.setOnClickListener(new OnClickListener() {
             @Override
@@ -154,6 +155,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
         background.setProgress(100);
         mprogressBar = (ProgressBar) findViewById(R.id.circular_progress_bar_background);
         mprogressBar.setProgress(count);
+        mprogressBar.setMax(whole_count);
 
         mprogressBar.setRotation(270);
 
@@ -511,6 +513,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
                 count = data.getIntExtra("count", 0);
                 whole_count = data.getIntExtra("whole_count", 124);
 
+                mprogressBar.setMax(whole_count);
                 edit_count.setText(String.valueOf(whole_count - count));
                 whole.setText(" / "+String.valueOf(whole_count)+"회");
 
@@ -544,6 +547,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
             if (pref != null) {
                 whole_count = pref.getInt("whole_count", 124);
                 whole.setText(" / "+String.valueOf(whole_count)+"회");
+                mprogressBar.setMax(whole_count);
 
                 count = pref.getInt("count", 0);
                 edit_count.setText(String.valueOf(whole_count - count));

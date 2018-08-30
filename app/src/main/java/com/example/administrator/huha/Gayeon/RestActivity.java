@@ -92,6 +92,7 @@ public class RestActivity extends BaseActivity {
         availity_edit = (EditText) findViewById(R.id.availity);
         whole = (EditText) findViewById(R.id.whole);
 
+        mprogressBar.setMax(whole_count);
         mprogressBar.setProgress(count);
         edit_count.setText(String.valueOf(count));
         whole.setText(" / "+String.valueOf(whole_count)+"회");
@@ -114,6 +115,7 @@ public class RestActivity extends BaseActivity {
                     save.setImageResource(R.drawable.edit);
 
                     whole_count = Integer.parseInt(availity);
+                    mprogressBar.setMax(whole_count);
                     whole.setText(" / "+String.valueOf(whole_count)+"회");
 
                     name_edit.setEnabled(false);
@@ -297,6 +299,7 @@ public class RestActivity extends BaseActivity {
             date_edit.setText(temp);
 
             availity_edit.setText(availity);
+            mprogressBar.setMax(whole_count);
             whole.setText(" / "+String.valueOf(whole_count)+"회");
 
             data = pref.getBoolean("data", false);
