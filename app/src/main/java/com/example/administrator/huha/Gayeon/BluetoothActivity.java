@@ -207,7 +207,8 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
                     persent = (double) count / (double) whole_count;
 
                     if (persent > 0.9) {
-                        showNotification(getApplicationContext(), "Hu-Ha", "흡입기의 약이 얼마 남지 않았어요 !", Noti_intent);
+
+                        RestActivity.notiPush(getApplicationContext(), "Hu-Ha", "흡입기의 약이 얼마 남지 않았어요 !", Noti_intent);
                     }
                 } else {
                     Toast.makeText(BluetoothActivity.this, "흡입기의 약을 다 사용하셨습니다!", Toast.LENGTH_LONG).show();
