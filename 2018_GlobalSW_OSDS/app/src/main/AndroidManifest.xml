@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.administrator.huha">
+
+    <!-- 서비스 관련 퍼미션 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="false"
+        android:icon="@drawable/app_icon"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAJNx6mnbnvPC6GCcocpklZZGk_oCvcWNI" />
+
+        <!-- 시작 액티비티를 SplashActivity로 설정, android:theme를 SplashTheme로 설정 -->
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".PersistentService"
+            android:enabled="true"
+            android:process=":remote" />
+
+        <activity android:name=".GoogleMap.Googlemap" />
+        <activity android:name=".Gayeon.BluetoothActivity" />
+        <activity android:name=".Gayeon.RestActivity" />
+        <activity android:name=".Gayeon.Base2Activity" />
+        <activity android:name=".Gayeon.BaseActivity" />
+        <activity
+            android:name=".jaehun.weatherActivity"
+            android:theme="@style/weatherTheme" />
+        <activity android:name=".Gayeon.Tmap"></activity>
+    </application>
+
+</manifest>

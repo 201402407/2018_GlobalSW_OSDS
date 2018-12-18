@@ -1,0 +1,29 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimaryDark">#5CDFF7</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+    <!-- splash page -->
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- No Title Bar-->
+        <!-- <item name="windowActionBar">false</item> -->
+        <item name="android:windowFullscreen">true</item>
+        <item name="windowNoTitle">true</item>
+
+        <item name="android:windowBackground">@drawable/background_splash</item>
+    </style>
+
+    <style name="weatherTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimaryDark">#5CDFF7</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="EditTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:colorAccent">@color/cursorColor</item>
+        <item name="android:colorControlNormal">@color/nomalColor</item>
+    </style>
+</resources>
