@@ -46,6 +46,7 @@
         <activity
             android:name=".jaehun.weatherActivity"
             android:theme="@style/weatherTheme" />
+        <activity android:name=".Gayeon.Tmap"></activity>
     </application>
 
 </manifest>

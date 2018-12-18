@@ -132,7 +132,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
         button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Googlemap.class);
+                Intent intent = new Intent(getApplicationContext(), Tmap.class);
                 startActivity(intent);
             }
         });
