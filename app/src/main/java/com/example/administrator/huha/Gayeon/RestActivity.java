@@ -153,7 +153,7 @@ public class RestActivity extends BaseActivity {
                 mReference = mDatabase.getReference("Date");
                 String time = getTime().toString().trim();
 
-                if (count != 124) {
+                if (count < whole_count) {
                     count++;
                     if (!TextUtils.isEmpty(tokenID)) {
                         SendData.count = count;
