@@ -206,7 +206,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
 
                     persent = (double) count / (double) whole_count;
 
-                    if (persent > 0.9) {
+                    if (count < 10) {
 
                         RestActivity.notiPush(getApplicationContext(), "Hu-Ha", "흡입기의 약이 얼마 남지 않았어요 !", Noti_intent);
                     }
