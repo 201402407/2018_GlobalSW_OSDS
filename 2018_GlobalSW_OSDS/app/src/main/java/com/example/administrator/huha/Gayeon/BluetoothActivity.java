@@ -59,6 +59,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BluetoothActivity extends Base2Activity implements LocationListener {
 
+    
     double longitude;
     double latitude;
     LocationManager locationManager;
