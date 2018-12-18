@@ -30,7 +30,8 @@ public class Tmap extends AppCompatActivity {
     TMapMarkerItem markerItem1 = new TMapMarkerItem();
     TMapPoint tMapPoint1 = new TMapPoint(127.345955, 36.370203);
 
-
+    // 마커 아이콘
+    Bitmap bitmap = BitmapFactory.decodeResource(Tmap.this.getResources(), R.drawable.marker);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +44,14 @@ public class Tmap extends AppCompatActivity {
         tmapview.setSKTMapApiKey("ef89c5c4-fe59-4469-9dca-4792af9f3d22");
 
         //tmapview.setCompassMode(true);
-        tmapview.setIconVisibility(true); //현재 위치로 표시될 아이콘을 표시할지 여부를 설정
+        tmapview.setIconVisibility(false); //현재 위치로 표시될 아이콘을 표시할지 여부를 설정
         tmapview.setZoomLevel(15);
         //tmapview.setMapType(TMapView.MAPTYPE_STANDARD);
         tmapview.setLanguage(TMapView.LANGUAGE_KOREAN); //언어 선택(기본언어는 한국어)
         tmapview.setCenterPoint(127.345955, 36.370203);
         linearLayoutTmap.addView(tmapview);
 
-        // 마커 아이콘
-        Bitmap bitmap = BitmapFactory.decodeResource(Tmap.this.getResources(), R.drawable.marker);
+
 
         markerItem1.setIcon(bitmap); // 마커 아이콘 지정
         markerItem1.setPosition(0.5f, 1.0f); // 마커의 중심점을 중앙, 하단으로 설정
