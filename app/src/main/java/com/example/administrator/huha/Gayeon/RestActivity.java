@@ -60,6 +60,8 @@ public class RestActivity extends BaseActivity {
     EditText name_edit, date_edit, availity_edit;
     Toolbar mToolbar;
 
+    Intent Noti_intent;
+
     boolean data = false;
     static boolean isPush = false;
 
@@ -155,6 +157,8 @@ public class RestActivity extends BaseActivity {
             }
         });
 
+        Noti_intent = new Intent(getApplicationContext(), SplashActivity.class);
+
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -178,12 +182,11 @@ public class RestActivity extends BaseActivity {
 
                     persent = (double) count / (double) whole_count;
 
-                    if(persent > 0.9) {
-                        Intent Noti_intent = new Intent(getApplicationContext(), SplashActivity.class);
+                    if(count < 10) {
                         notiPush(getApplicationContext(), "Hu-Ha", "흡입기의 약이 얼마 남지 않았어요 !", Noti_intent);
                     }
                 } else {
-                    Toast.makeText(RestActivity.this, "흡입기의 약을 다 사용하셨습니다!", Toast.LENGTH_LONG).show();
+                    notiPush(getApplicationContext(), "Hu-Ha", "흡입기의 약을 다 사용하셨습니다 !", Noti_intent);
                 }
             }
         });
@@ -258,6 +261,7 @@ public class RestActivity extends BaseActivity {
             }, 3000);
         }
     }
+
     // 액션 바 메뉴 클릭 이벤트 함수.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
