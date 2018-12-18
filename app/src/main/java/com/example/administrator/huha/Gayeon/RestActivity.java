@@ -3,8 +3,14 @@ package com.example.administrator.huha.Gayeon;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,6 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.administrator.huha.R;
+import com.example.administrator.huha.SplashActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -25,6 +32,8 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class RestActivity extends BaseActivity {
 
@@ -52,13 +61,14 @@ public class RestActivity extends BaseActivity {
     Toolbar mToolbar;
 
     boolean data = false;
-
+    static boolean isPush = false;
 
     final Calendar c = Calendar.getInstance();
     int myear=0,mmonth,mday;
     int year = c.get(Calendar.YEAR);
     int month = c.get(Calendar.MONTH);
     int day = c.get(Calendar.DAY_OF_MONTH);
+
     String temp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,7 +163,7 @@ public class RestActivity extends BaseActivity {
                 mReference = mDatabase.getReference("Date");
                 String time = getTime().toString().trim();
 
-                if (count != 124) {
+                if (count < whole_count) {
                     count++;
                     if (!TextUtils.isEmpty(tokenID)) {
                         SendData.count = count;
@@ -168,6 +178,10 @@ public class RestActivity extends BaseActivity {
 
                     persent = (double) count / (double) whole_count;
 
+                    if(persent > 0.9) {
+                        Intent Noti_intent = new Intent(getApplicationContext(), SplashActivity.class);
+                        notiPush(getApplicationContext(), "Hu-Ha", "흡입기의 약이 얼마 남지 않았어요 !", Noti_intent);
+                    }
                 } else {
                     Toast.makeText(RestActivity.this, "흡입기의 약을 다 사용하셨습니다!", Toast.LENGTH_LONG).show();
                 }
@@ -230,6 +244,20 @@ public class RestActivity extends BaseActivity {
     }
     */
 
+    /* 노티 알람 함수 */
+    public static void notiPush(Context con, String notiTitle, String notiText, Intent intent) {
+        if(!isPush) {
+            isPush = true;
+            showNotification(con, notiTitle, notiText, intent);
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    isPush = false; // 1초후에 닫기
+                }
+            }, 3000);
+        }
+    }
     // 액션 바 메뉴 클릭 이벤트 함수.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -383,4 +411,30 @@ public class RestActivity extends BaseActivity {
         }
     }
 
+
+    // 노티 알람 함수.
+    public static void showNotification(Context context, String title, String body, Intent intent) {
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        int notificationId = 1;
+        String channelId = "channel-01";
+        String channelName = "Channel Name";
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel mChannel = new NotificationChannel(
+                    channelId, channelName, importance);
+            notificationManager.createNotificationChannel(mChannel);
+        }
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, channelId)
+                .setSmallIcon(R.drawable.noti_image)
+                .setContentTitle(title)
+                .setContentText(body);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addNextIntent(intent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(
+                0,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        );
+        mBuilder.setContentIntent(resultPendingIntent);
+        notificationManager.notify(notificationId, mBuilder.build());
+    }
 }

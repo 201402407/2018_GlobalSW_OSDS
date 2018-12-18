@@ -37,8 +37,8 @@ import com.example.administrator.huha.GoogleMap.Googlemap;
 import com.example.administrator.huha.PersistentService;
 import com.example.administrator.huha.R;
 import com.example.administrator.huha.SplashActivity;
-import com.example.administrator.huha.jaehun.WeatherRepo;
-import com.example.administrator.huha.jaehun.day3Repo;
+import com.example.administrator.huha.haewon.WeatherRepo;
+import com.example.administrator.huha.haewon.day3Repo;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -76,7 +76,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
     Set<BluetoothDevice> mDevices;
 
     BluetoothAdapter mBluetoothAdapter;
-    BluetoothDevice mRemoteDevie;
+    BluetoothDevice mRemoteDevice;
 
     // 스마트폰과 페어링 된 디바이스간 통신 채널에 대응 하는 BluetoothSocket
     BluetoothSocket mSocket = null;
@@ -145,7 +145,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
         weather.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent2 = new Intent(getApplicationContext(), com.example.administrator.huha.jaehun.weatherActivity.class);
+                Intent intent2 = new Intent(getApplicationContext(), com.example.administrator.huha.haewon.weatherActivity.class);
                 startActivity(intent2);
             }
         });
@@ -207,7 +207,8 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
                     persent = (double) count / (double) whole_count;
 
                     if (persent > 0.9) {
-                        showNotification(getApplicationContext(), "Hu-Ha", "흡입기의 약이 얼마 남지 않았어요 !", Noti_intent);
+
+                        RestActivity.notiPush(getApplicationContext(), "Hu-Ha", "흡입기의 약이 얼마 남지 않았어요 !", Noti_intent);
                     }
                 } else {
                     Toast.makeText(BluetoothActivity.this, "흡입기의 약을 다 사용하셨습니다!", Toast.LENGTH_LONG).show();
@@ -220,6 +221,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
         //히히
     }
 
+    //
     BluetoothDevice getDeviceFromBondedList(String name) {
         BluetoothDevice selectedDevice = null;
         for (BluetoothDevice deivce : mDevices) {
@@ -242,26 +244,23 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
         }
     }
 
+    // 아두이노와 블루투스 연결이 되었는지 확인
     public void connectToSelectedDevice(String selectedDeviceName) {
-        mRemoteDevie = getDeviceFromBondedList(selectedDeviceName);
+        mRemoteDevice = getDeviceFromBondedList(selectedDeviceName);
         UUID uuid = java.util.UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 
         try {
-            mSocket = mRemoteDevie.createRfcommSocketToServiceRecord(uuid);
+            mSocket = mRemoteDevice.createRfcommSocketToServiceRecord(uuid);
             mSocket.connect();
             mOutputStream = mSocket.getOutputStream();
             mInputStream = mSocket.getInputStream();
 
             Toast.makeText(this, "블루투스 연결 성공!", Toast.LENGTH_LONG).show();
-
-
-
             // 데이터 수신 준비.
             beginListenForData();
 
         } catch (Exception e) {
             Toast.makeText(this, "블루투스 연결 중 오류가 발생했습니다.", Toast.LENGTH_LONG).show();
-
         }
     }
 
@@ -276,7 +275,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
         mWorkerThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                while (!Thread.currentThread().isInterrupted()) {
+                while (!Thread.currentThread().isInterrupted()) { // while문을 통해 실시간 탐색하도록
                     try {
                         int byteAvailable = mInputStream.available();
                         if (byteAvailable > 0) {
@@ -399,38 +398,6 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
 //            Btn_Connect.setVisibility(View.VISIBLE);
 //            Btn_RESET.setVisibility(View.INVISIBLE);
         } else {
-//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//            builder.setTitle("블루투스 장치 선택");
-//
-//            List<String> listItems = new ArrayList<String>();
-//            for (BluetoothDevice device : mDevices) {
-//                listItems.add(device.getName());
-//            }
-//            listItems.add("취소");
-//
-//
-//            final CharSequence[] items = listItems.toArray(new CharSequence[listItems.size()]);
-//            listItems.toArray(new CharSequence[listItems.size()]);
-//
-//            builder.setItems(items, new DialogInterface.OnClickListener() {
-//
-//                @Override
-//                public void onClick(DialogInterface dialog, int item) {
-//                    // TODO Auto-generated method stub
-//                    if (item == mPariedDeviceCount) {
-//                        Toast.makeText(this, "연결할 장치를 선택하지 않았습니다.", Toast.LENGTH_LONG).show();
-////                    finish();
-//                    } else {
-////                        connectToSelectedDevice(items[item].toString());
-//                        connectToSelectedDevice("OSDS");
-//                    }
-//                }
-//
-//            });
-//
-//            builder.setCancelable(false);  // 뒤로 가기 버튼 사용 금지
-//            AlertDialog alert = builder.create();
-//            alert.show();
             connectToSelectedDevice(BT_NAME);
         }
     }
@@ -502,7 +469,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
                 if (resultCode == RESULT_OK) {
                     selectDevice();
                 } else if (resultCode == RESULT_CANCELED) {
-                    Toast.makeText(getApplicationContext(), "블루투수를 사용할 수 없어 프로그램을 종료합니다",
+                    Toast.makeText(getApplicationContext(), "블루투스를 사용할 수 없어 프로그램을 종료합니다",
                             Toast.LENGTH_LONG).show();
                     finish();
                 }
@@ -538,6 +505,7 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
 
     protected void restoreState() {
 
+        // 안드로이드 내 파일 형식으로 데이터 저장
         SharedPreferences pref = getSharedPreferences("pref", Activity.MODE_PRIVATE);
 
         if (check) {

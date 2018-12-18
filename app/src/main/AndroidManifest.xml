@@ -44,7 +44,7 @@
         <activity android:name=".Gayeon.Base2Activity" />
         <activity android:name=".Gayeon.BaseActivity" />
         <activity
-            android:name=".jaehun.weatherActivity"
+            android:name=".haewon.weatherActivity"
             android:theme="@style/weatherTheme" />
         <activity android:name=".Gayeon.Tmap"></activity>
     </application>

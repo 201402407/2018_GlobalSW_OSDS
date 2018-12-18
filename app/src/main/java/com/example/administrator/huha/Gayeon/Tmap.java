@@ -44,7 +44,7 @@ public class Tmap extends AppCompatActivity {
         tmapview.setSKTMapApiKey("ef89c5c4-fe59-4469-9dca-4792af9f3d22");
 
         //tmapview.setCompassMode(true);
-        tmapview.setIconVisibility(false); //현재 위치로 표시될 아이콘을 표시할지 여부를 설정
+        tmapview.setIconVisibility(true); //현재 위치로 표시될 아이콘을 표시할지 여부를 설정
         tmapview.setZoomLevel(15);
         //tmapview.setMapType(TMapView.MAPTYPE_STANDARD);
         tmapview.setLanguage(TMapView.LANGUAGE_KOREAN); //언어 선택(기본언어는 한국어)
