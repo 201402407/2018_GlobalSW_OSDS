@@ -373,22 +373,6 @@ public class BluetoothActivity extends Base2Activity implements LocationListener
         notificationManager.notify(notificationId, mBuilder.build());
     }
 
-    // 노티 알람 함수
-    /*
-    private void noti() {
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(BluetoothActivity.this)
-                        .setSmallIcon(R.drawable.ic_action_noti)
-                        .setContentTitle("HU-HA")
-                        .setContentText("흡입기의 약이 얼마 남지 않았어요!!")
-                        .setAutoCancel(true);
-
-        NotificationManager mNotificationManager =
-                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        mNotificationManager.notify(0, mBuilder.build());
-    }
-    */
-
     public void selectDevice() {
         mDevices = mBluetoothAdapter.getBondedDevices();
         mPariedDeviceCount = mDevices.size();
